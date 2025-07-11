@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Portfolio | DesignCraft Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #0a192f;
+            --secondary: #64ffda;
+            --text: #ccd6f6;
+            --light: #e6f1ff;
+            --branding: #64ffda;
+            /* Teal */
+            --web: #569cff;
+            /* Blue */
+            --modeling: #ff7eee;
+            /* Pink */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        /* Burger Menu Styles */
+        .burger-menu {
+            display: none;
+            cursor: pointer;
+            z-index: 1001;
+            width: 40px;
+            height: 40px;
+            background: rgba(100, 255, 218, 0.1);
+            border-radius: 5px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .burger-menu div {
+            width: 25px;
+            height: 3px;
+            background-color: var(--secondary);
+            margin: 3px 0;
+            transition: all 0.3s ease;
+        }
+
+        .burger-menu:hover div {
+            background-color: var(--light);
+        }
+
+        .burger-menu.active {
+            background: rgba(100, 255, 218, 0.2);
+        }
+
+        .burger-menu.active div {
+            background-color: var(--light);
+        }
+
+        .burger-menu.active div:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .burger-menu.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger-menu.active div:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Mobile Navigation  */
+        @media (max-width: 768px) {
+            nav ul {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                max-width: 300px;
+                background: rgba(10, 25, 47, 0.98);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 30px;
+                transition: right 0.5s ease;
+                z-index: 999;
+                backdrop-filter: blur(10px);
+                border-left: 1px solid rgba(100, 255, 218, 0.1);
+            }
+
+            nav ul.active {
+                right: 0;
+            }
+
+            nav a {
+                font-size: 1.2rem;
+                padding: 10px;
+            }
+
+            .burger-menu {
+                display: flex;
+            }
+        }
+
+        /* Portfolio Header */
+        .portfolio-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .portfolio-header h1 {
+            font-size: 2.8rem;
+            color: var(--light);
+            margin-bottom: 15px;
+        }
+
+        /* Filter Buttons */
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            padding: 10px 25px;
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--text);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--secondary);
+            color: var(--primary);
+            border-color: var(--secondary);
+        }
+
+        .filter-btn[data-filter="branding"].active {
+            background: var(--branding);
+        }
+
+        .filter-btn[data-filter="web"].active {
+            background: var(--web);
+        }
+
+        .filter-btn[data-filter="modeling"].active {
+            background: var(--modeling);
+        }
+
+        /* Masonry Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(10, 25, 47, 0.9), transparent);
+            padding: 20px;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover .overlay {
+            transform: translateY(0);
+        }
+
+        .overlay h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.2rem;
+        }
+
+        .overlay p {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            z-index: 1000;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            max-width: 900px;
+            margin: 50px auto;
+            background: rgba(10, 25, 47, 0.9);
+            border: 1px solid var(--secondary);
+            border-radius: 10px;
+            overflow: hidden;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .modal-img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            background: #0a192f;
+        }
+
+        .modal-info {
+            padding: 30px;
+        }
+
+        .modal-info h2 {
+            color: var(--secondary);
+            margin-top: 0;
+        }
+
+        .project-date {
+            color: var(--light);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .tools-used {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .tool {
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--secondary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--secondary);
+        }
+
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            background: rgba(10, 25, 47, 0.8);
+            margin-top: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-buttons {
+                gap: 10px;
+            }
+
+            .filter-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="container">
+        <div class="logo">DesignCraft</div>
+        <div class="burger-menu">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="services">Services</a></li>
+                <li><a href="portfolio" style="color: var(--secondary);">Portfolio</a></li>
+                <li><a href="pricing">Pricing</a></li>
+                <li><a href="contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Portfolio Content -->
+    <main class="container">
+        <div class="portfolio-header">
+            <h1>Our Creative Work</h1>
+            <p>Explore our latest projects across different creative disciplines</p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Projects</button>
+            <button class="filter-btn" data-filter="branding">Brand Identity</button>
+            <button class="filter-btn" data-filter="web">Web & App Design</button>
+            <button class="filter-btn" data-filter="modeling">3D Modeling</button>
+        </div>
+
+        <!-- Portfolio Grid -->
+        <div class="portfolio-grid">
+            <!-- Branding Projects -->
+            <div class="portfolio-item" data-category="branding">
+                <img src="https://cdn.pixabay.com/photo/2016/11/30/07/08/abstract-1872999_1280.jpg"
+                    alt="NexaCorp Branding">
+                <div class="overlay">
+                    <h3>NexaCorp</h3>
+                    <p>15/03/2024</p>
+                </div>
+                <!-- Modal Content (hidden by default) -->
+                <div class="modal" id="modal-1">
+                    <span class="close-btn">&times;</span>
+                    <div class="modal-content">
+                        <img src="https://cdn.pixabay.com/photo/2016/11/30/07/08/abstract-1872999_1280.jpg"
+                            class="modal-img" alt="NexaCorp Branding">
+                        <div class="modal-info">
+                            <h2>NexaCorp Brand Identity</h2>
+                            <span class="project-date">15/03/2024</span>
+                            <p>Complete rebranding for tech startup including minimalist logo design, business
+                                stationery, and brand guidelines. Created a modern visual identity that reflects their
+                                innovative approach to AI solutions.</p>
+                            <div class="tools-used">
+                                <span class="tool">Adobe Illustrator</span>
+                                <span class="tool">Photoshop</span>
+                                <span class="tool">Brand Guidelines</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Web Projects -->
+            <div class="portfolio-item" data-category="web">
+                <img src="https://cdn.pixabay.com/photo/2015/02/02/11/09/office-620822_1280.jpg"
+                    alt="FinTrack Dashboard">
+                <div class="overlay">
+                    <h3>FinTrack</h3>
+                    <p>22/02/2024</p>
+                </div>
+                <div class="modal" id="modal-2">
+                    <span class="close-btn">&times;</span>
+                    <div class="modal-content">
+                        <img src="https://cdn.pixabay.com/photo/2015/02/02/11/09/office-620822_1280.jpg"
+                            class="modal-img" alt="FinTrack Dashboard">
+                        <div class="modal-info">
+                            <h2>FinTrack Dashboard UI</h2>
+                            <span class="project-date">22/02/2024</span>
+                            <p>Financial tracking dashboard designed for personal finance management. Focused on
+                                creating an intuitive interface with clear data visualization and easy navigation
+                                between different financial metrics.</p>
+                            <div class="tools-used">
+                                <span class="tool">Figma</span>
+                                <span class="tool">Adobe XD</span>
+                                <span class="tool">UI Design</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3D Projects -->
+            <div class="portfolio-item" data-category="modeling">
+                <img src="https://cdn.pixabay.com/photo/2018/03/30/15/11/deer-3275594_1280.jpg"
+                    alt="Wildlife 3D Render">
+                <div class="overlay">
+                    <h3>NatureVision</h3>
+                    <p>10/01/2024</p>
+                </div>
+                <div class="modal" id="modal-3">
+                    <span class="close-btn">&times;</span>
+                    <div class="modal-content">
+                        <img src="https://cdn.pixabay.com/photo/2018/03/30/15/11/deer-3275594_1280.jpg"
+                            class="modal-img" alt="Wildlife 3D Render">
+                        <div class="modal-info">
+                            <h2>Wildlife 3D Render</h2>
+                            <span class="project-date">10/01/2024</span>
+                            <p>Hyper-realistic 3D render of deer in natural habitat for NatureVision's conservation
+                                campaign. Created with attention to fur texture, lighting, and environmental details to
+                                evoke emotional connection with wildlife.</p>
+                            <div class="tools-used">
+                                <span class="tool">Blender</span>
+                                <span class="tool">Substance Painter</span>
+                                <span class="tool">3D Modeling</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Projects (9 more in total) -->
+            <!-- Branding -->
+            <div class="portfolio-item" data-category="branding">
+                <img src="https://cdn.pixabay.com/photo/2016/11/29/08/41/apple-1868496_1280.jpg" alt="FreshBite Logo">
+                <div class="overlay">
+                    <h3>FreshBite</h3>
+                    <p>05/04/2024</p>
+                </div>
+                <!-- Modal would be similar to above -->
+            </div>
+
+            <!-- Web -->
+            <div class="portfolio-item" data-category="web">
+                <img src="https://cdn.pixabay.com/photo/2015/05/31/13/45/tablet-791172_1280.jpg" alt="EduLearn App">
+                <div class="overlay">
+                    <h3>EduLearn</h3>
+                    <p>18/03/2024</p>
+                </div>
+            </div>
+
+            <!-- 3D -->
+            <div class="portfolio-item" data-category="modeling">
+                <img src="https://cdn.pixabay.com/photo/2017/01/10/03/06/architecture-1966678_1280.jpg"
+                    alt="Architectural Visual">
+                <div class="overlay">
+                    <h3>UrbanSpace</h3>
+                    <p>28/02/2024</p>
+                </div>
+            </div>
+
+            <!-- Branding -->
+            <div class="portfolio-item" data-category="branding">
+                <img src="https://cdn.pixabay.com/photo/2016/08/20/06/44/e-commerce-1606962_1280.jpg"
+                    alt="ShopEasy Branding">
+                <div class="overlay">
+                    <h3>ShopEasy</h3>
+                    <p>12/01/2024</p>
+                </div>
+            </div>
+
+            <!-- Web -->
+            <div class="portfolio-item" data-category="web">
+                <img src="https://cdn.pixabay.com/photo/2015/07/17/22/43/student-849825_1280.jpg"
+                    alt="HealthTrack Mobile">
+                <div class="overlay">
+                    <h3>HealthTrack</h3>
+                    <p>30/12/2023</p>
+                </div>
+            </div>
+
+            <!-- 3D -->
+            <div class="portfolio-item" data-category="modeling">
+                <img src="https://cdn.pixabay.com/photo/2017/01/15/16/48/headphones-1982643_1280.jpg"
+                    alt="Product Render">
+                <div class="overlay">
+                    <h3>AudioSphere</h3>
+                    <p>15/12/2023</p>
+                </div>
+            </div>
+
+            <!-- Branding -->
+            <div class="portfolio-item" data-category="branding">
+                <img src="https://cdn.pixabay.com/photo/2016/11/29/03/36/coffee-1867747_1280.jpg" alt="BrewHaven Logo">
+                <div class="overlay">
+                    <h3>BrewHaven</h3>
+                    <p>03/12/2023</p>
+                </div>
+            </div>
+
+            <!-- Web -->
+            <div class="portfolio-item" data-category="web">
+                <img src="https://cdn.pixabay.com/photo/2015/05/28/14/53/ux-787980_1280.jpg" alt="Travel App UI">
+                <div class="overlay">
+                    <h3>Wanderly</h3>
+                    <p>20/11/2023</p>
+                </div>
+            </div>
+
+            <!-- 3D -->
+            <div class="portfolio-item" data-category="modeling">
+                <img src="https://cdn.pixabay.com/photo/2017/03/05/15/29/aston-martin-2118857_1280.jpg"
+                    alt="Car Render">
+                <div class="overlay">
+                    <h3>AutoElite</h3>
+                    <p>08/11/2023</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/yournumber" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 DesignCraft Studio. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Filter Functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active button
+                    filterBtns.forEach(btn => btn.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const filter = btn.dataset.filter;
+
+                    // Filter items
+                    portfolioItems.forEach(item => {
+                        if (filter === 'all' || item.dataset.category === filter) {
+                            item.style.display = 'block';
+                            setTimeout(() => {
+                                item.style.opacity = '1';
+                                item.style.transform = 'translateY(0)';
+                            }, 50);
+                        } else {
+                            item.style.opacity = '0';
+                            item.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                item.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+
+            // Modal Functionality
+            const portfolioItemsClickable = document.querySelectorAll('.portfolio-item');
+            const modals = document.querySelectorAll('.modal');
+            const closeBtns = document.querySelectorAll('.close-btn');
+
+            portfolioItemsClickable.forEach((item, index) => {
+                item.addEventListener('click', (e) => {
+                    if (!e.target.classList.contains('modal') && !e.target.classList.contains('modal-content')) {
+                        modals[index].style.display = 'block';
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+
+            closeBtns.forEach((btn, index) => {
+                btn.addEventListener('click', () => {
+                    modals[index].style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                });
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal')) {
+                    e.target.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Burger Menu Functionality 
+        const burgerMenu = document.querySelector('.burger-menu');
+        const navLinks = document.querySelector('nav ul');
+        const navItems = document.querySelectorAll('nav a');
+
+        // Toggle menu on burger click
+        burgerMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            burgerMenu.classList.toggle('active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Close menu when clicking a link
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                burgerMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav') && !e.target.closest('.burger-menu')) {
+                navLinks.classList.remove('active');
+                burgerMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    </script>
+</body>
+
+</html>
