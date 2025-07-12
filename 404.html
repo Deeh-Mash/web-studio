@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found | DeehMash Labs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Inherit all root/styles from main page */
+        :root {
+            --primary: #0a192f;
+            --secondary: #64ffda;
+            --text: #ccd6f6;
+            --light: #e6f1ff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 50px 20px;
+        }
+
+        /* Error Content */
+        .error-code {
+            font-size: 8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+
+        .error-message {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--light);
+        }
+
+        .error-image {
+            max-width: 400px;
+            margin: 40px auto;
+            filter: drop-shadow(0 10px 20px rgba(100, 255, 218, 0.2));
+        }
+
+        .error-image img {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+        }
+
+        /* Buttons (reuse main styles) */
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--primary);
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(100, 255, 218, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            background: rgba(10, 25, 47, 0.8);
+        }
+
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 5rem;
+            }
+
+            .error-image {
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="error-code">404</div>
+        <h1 class="error-message">Oops! This Page Crashed.</h1>
+        <div class="error-image">
+            <!-- 3D-themed error illustration -->
+            <img src="https://cdn.dribbble.com/users/774806/screenshots/3823110/media/9d9a581c9e6ea9b6b7d4c15d3aa1ad6b.gif"
+                alt="Broken Robot">
+        </div>
+        <p>The page you're looking for doesn't exist or got lost in cyberspace.<br>Let's get you back on track:</p>
+        <div>
+            <a href="/" class="btn">Go Home</a>
+            <a href="contact" class="btn btn-outline"
+                style="background: transparent; color: var(--secondary); border: 1px solid var(--secondary);">Contact
+                Support</a>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 DeehMash Labs. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
