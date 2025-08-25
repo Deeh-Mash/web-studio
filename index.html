@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>We've Moved | MashCodes Studio</title>
+
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,24 +17,21 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+    <!-- Meta -->
     <meta
       name="google-site-verification"
       content="coyrNxFMqH6D_E6UEwDRuFr8ETkvUdKpRbKpOGB3C2E"
     />
-    <!-- for search purposes -->
     <meta
       name="description"
       content="South Africa's premier creative studio specializing in brand identity, web development, and 3D visualization. Transforming concepts into market-ready solutions since 2024."
     />
-
-    <meta name="" content="deehmashlab" />
-    <meta name="" content="deeh,mash,lab" />
-    <meta name="" content="deehmash lab" />
-    <meta name="" content="deehmash" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap"
-      rel="stylesheet"
+    <meta
+      name="keywords"
+      content="deehmashlab, deehmash lab, mashcodes, deeh mash, creative studio, branding, web development, 3D"
     />
+
     <style>
       * {
         margin: 0;
@@ -40,11 +39,18 @@
         box-sizing: border-box;
       }
 
+      html,
       body {
+        height: 100%;
         font-family: "Poppins", sans-serif;
         background-color: #0a192f;
         color: #ccd6f6;
         overflow: hidden;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
       }
 
       .container {
@@ -54,9 +60,16 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100vh;
+        flex: 1;
         text-align: center;
         padding: 20px;
+      }
+
+      header .logo {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 30px;
+        color: #64ffda;
       }
 
       h1 {
@@ -87,47 +100,88 @@
         box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
       }
 
+      footer {
+        text-align: center;
+        padding: 15px;
+        background-color: #0a192f;
+        font-size: 0.9rem;
+        color: #8892b0;
+      }
+
       canvas {
         position: fixed;
         top: 0;
         left: 0;
         z-index: 0;
       }
+
+      /* WhatsApp floating icon */
+      .whatsapp-float {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #25d366;
+        color: white;
+        border-radius: 50%;
+        padding: 15px;
+        font-size: 24px;
+        z-index: 999;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        transition: 0.3s ease;
+      }
+
+      .whatsapp-float:hover {
+        transform: scale(1.1);
+      }
     </style>
   </head>
-
   <body>
-    <!-- Header with Enhanced Burger Menu -->
-    <header class="container">
-      <div class="logo">MashCodes Studio <i class="fas fa-code"></i></div>
-    </header>
-
     <div class="container">
-      <h1>We’ve Moved!</h1>
-      <p>Our new website is now live at <strong>me.com</strong>.</p>
-      <a class="button" href="https://mashcodes.co.za/">Visit New Site</a>
+      <header>
+        <div class="logo">MashCodes Studio <i class="fas fa-code"></i></div>
+      </header>
+
+      <main>
+        <h1>We’ve Moved!</h1>
+        <p>Our new website is now live at <strong>mashcodes.co.za</strong>.</p>
+        <p id="countdown">
+          You will be redirected in <strong>10</strong> seconds...
+        </p>
+
+        <a class="button" href="https://mashcodes.co.za/">Visit New Site</a>
+      </main>
     </div>
 
-    <canvas id="bgCanvas"></canvas>
-    <!-- Footer -->
     <footer>
-      <div class="container">
-        <i class="fas fa-code"></i>
-        <p>2024 MashCodes Studio. All rights reserved.</p>
-      </div>
+      <p>
+        <i class="fas fa-code"></i> 2024 MashCodes Studio. All rights reserved.
+      </p>
     </footer>
+
+    <canvas id="bgCanvas"></canvas>
 
     <!-- WhatsApp Float -->
     <a href="https://wa.me/+27710551756" class="whatsapp-float" target="_blank">
       <i class="fab fa-whatsapp"></i>
     </a>
-    <script>
-      // Auto-redirect after 6 seconds
-      setTimeout(() => {
-        window.location.href = "https://mashcodes.co.za/";
-      }, 10000);
 
-      // Simple particle animation
+    <script>
+      // Countdown redirect
+      let seconds = 10;
+      const countdownEl = document.getElementById("countdown");
+
+      const countdownInterval = setInterval(() => {
+        seconds--;
+        if (seconds > 0) {
+          countdownEl.innerHTML = `You will be redirected in <strong>${seconds}</strong> seconds...`;
+        } else {
+          clearInterval(countdownInterval);
+          countdownEl.innerHTML = "Redirecting...";
+          window.location.href = "https://mashcodes.co.za/";
+        }
+      }, 1000);
+
+      // Particle animation
       const canvas = document.getElementById("bgCanvas");
       const ctx = canvas.getContext("2d");
 
